@@ -3,6 +3,7 @@ import {
   FETCH_SUCCESS,
   FETCH_FAIL,
   ADD_SMURF,
+  SET_ERROR,
 } from "./../actions";
 export const initialState = {
   smurfs: [],
@@ -21,7 +22,7 @@ const reducer = (state = initialState, action) => {
     case FETCH_SUCCESS:
       return {
         ...state,
-        pokemon: action.payload,
+        smurfs: action.payload,
         isFetching: false,
       };
     case FETCH_FAIL:
@@ -32,6 +33,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case ADD_SMURF:
+      console.log("SDOAID");
       const newSmurf = {
         ...action.payload,
         id: state.smurfs.reduce(
@@ -42,8 +44,15 @@ const reducer = (state = initialState, action) => {
       };
       return {
         ...state,
-        smurfs: [state.smurfs, newSmurf],
+        smurfs: [...state.smurfs, newSmurf],
       };
+
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     default:
       return state;
   }
