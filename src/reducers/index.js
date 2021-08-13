@@ -33,14 +33,9 @@ const reducer = (state = initialState, action) => {
       };
 
     case ADD_SMURF:
-      console.log("SDOAID");
       const newSmurf = {
         ...action.payload,
-        id: state.smurfs.reduce(
-          (accumulator, currentValue) =>
-            Math.max(accumulator, currentValue.id) + 1,
-          0
-        ),
+        id: Date().valueOf(),
       };
       return {
         ...state,
