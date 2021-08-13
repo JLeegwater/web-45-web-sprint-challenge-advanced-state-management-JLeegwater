@@ -1,9 +1,53 @@
-
+import {
+  FETCH_START,
+  FETCH_SUCCESS,
+  FETCH_FAIL,
+  ADD_SMURF,
+} from "./../actions";
 export const initialState = {
-}
+  smurfs: [],
+  isFetching: false,
+  error: "",
+};
 
-const reducer = ()=>{
-}
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_START:
+      return {
+        ...state,
+        isFetching: true,
+        error: "",
+      };
+    case FETCH_SUCCESS:
+      return {
+        ...state,
+        pokemon: action.payload,
+        isFetching: false,
+      };
+    case FETCH_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        isFetching: false,
+      };
+
+    case ADD_SMURF:
+      const newSmurf = {
+        ...action.payload,
+        id: state.smurfs.reduce(
+          (accumulator, currentValue) =>
+            Math.max(accumulator, currentValue.id) + 1,
+          0
+        ),
+      };
+      return {
+        ...state,
+        smurfs: [state.smurfs, newSmurf],
+      };
+    default:
+      return state;
+  }
+};
 
 //**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
 export default reducer;
